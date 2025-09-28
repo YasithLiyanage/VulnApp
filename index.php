@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VulnApp — IE2062 Web Security Lab</title>
+  <title>VulnApp — Yasith Liyanage</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -57,7 +57,7 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <small>Created for IE2062 — Web Security lab • Do not expose flags publicly • Test in isolated environment</small>
+      <small>Web Security lab | Yasith Liyanage </small>
     </div>
   </footer>
 </body>
