@@ -1,7 +1,7 @@
 <?php
 // Set a flag in a cookie for the CTF challenge
 if (!isset($_COOKIE['flag'])) {
-    setcookie('flag', 'THM{xss_c00k13_st34l_5ucc3ss}', time() + 3600, '/', '', false, false);
+    setcookie('flag', 'THM{Th!s_iz_fiag2}', time() + 3600, '/', '', false, false);
 }
 
 // Initialize SQLite database
