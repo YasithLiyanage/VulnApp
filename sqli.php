@@ -1,110 +1,204 @@
 <?php
 $db = new SQLite3('data.db');
-
 $q = isset($_GET['q']) ? $_GET['q'] : '';
 ?>
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <title>VulnApp — Search Users</title>
+  <meta charset="utf-8">
+  <title>TechBlog - Search Authors</title>
   <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body {
-      background: linear-gradient(180deg, #071224 0%, #071226 45%, #06111a 100%);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    * {
       margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .search-container {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,0.03);
-      text-align: center;
-      width: 300px;
-    }
-    .search-container h2 {
-      margin-bottom: 20px;
-      color: var(--accent);
-    }
-    .search-container form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .search-container input[type="text"] {
-      margin-bottom: 10px;
-      padding: 10px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 10px;
-      width: 100%;
+      padding: 0;
       box-sizing: border-box;
     }
-    .search-container input[type="submit"] {
-      background: linear-gradient(180deg, var(--accent), var(--accent-2));
-      color: #042027;
-      padding: 10px 20px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 6px 14px rgba(6,182,212,0.12);
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
     }
-    .search-container input[type="submit"]:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(6,182,212,0.16);
+    
+    .header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem 0;
+      border-bottom: 3px solid #3498db;
     }
-    .hint {
-      margin-top: 20px;
-      color: var(--muted);
+    
+    .header .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header h1 {
+      font-size: 1.8rem;
+    }
+    
+    .header nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+    
+    .header nav a:hover {
+      color: #3498db;
+    }
+    
+    .content {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 20px;
+    }
+    
+    .search-box {
+      background: white;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    
+    .search-box h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+    
+    .search-box form {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .search-box input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
       font-size: 14px;
     }
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 20px 0 0 0;
-      width: 100%;
+    
+    .search-box input[type="submit"] {
+      background: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
     }
-    li {
-      background: rgba(255,255,255,0.05);
-      margin: 5px 0;
+    
+    .search-box input[type="submit"]:hover {
+      background: #2980b9;
+    }
+    
+    .results {
+      background: white;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    
+    .results h3 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    
+    .results ul {
+      list-style: none;
+    }
+    
+    .results li {
       padding: 10px;
-      border-radius: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .results li:last-child {
+      border-bottom: none;
+    }
+    
+    .results b {
+      color: #2c3e50;
+    }
+    
+    .no-results {
+      color: #666;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+    
+    @media (max-width: 768px) {
+      .header .container {
+        flex-direction: column;
+      }
+      .header nav {
+        margin-top: 10px;
+      }
+      .search-box form {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="search-container">
-    <h2>Search Users</h2>
-    <form method='get'>
-      <input type='text' name='q' value='<?php echo htmlspecialchars($q); ?>'>
-      <input type='submit' value='Search'>
-    </form>
-    <div class="hint">
-      Hint: Look for flag1.
+  <div class="header">
+    <div class="container">
+      <h1>TechBlog</h1>
+      <nav>
+        <a href="index.php">Home</a>
+        <a href="sqli.php">Authors</a>
+        <a href="xss.php">Comments</a>
+        <a href="idor.php?user=1">Profile</a>
+      </nav>
     </div>
+  </div>
+
+  <div class="content">
+    <div class="search-box">
+      <h2>Search Authors</h2>
+      <form method="get">
+        <input type="text" name="q" value="<?php echo htmlspecialchars($q); ?>" placeholder="Enter author name...">
+        <input type="submit" value="Search">
+      </form>
+    </div>
+
     <?php if ($q !== ''): ?>
-      <ul>
-        <?php
-        // intentionally vulnerable (no parameterized query)
-        $sql = "SELECT id, username, bio FROM users WHERE username LIKE '%$q%'";
-        $res = $db->query($sql);
-        while ($row = $res->fetchArray(SQLITE3_ASSOC)): ?>
-          <li><b><?php echo htmlspecialchars($row['username']); ?></b> - <?php echo htmlspecialchars($row['bio']); ?></li>
-        <?php endwhile; ?>
-      </ul>
+      <div class="results">
+        <h3>Search Results</h3>
+        <ul>
+          <?php
+          // intentionally vulnerable (no parameterized query)
+          $sql = "SELECT id, username, bio FROM users WHERE username LIKE '%$q%'";
+          $res = $db->query($sql);
+          $found = false;
+          while ($row = $res->fetchArray(SQLITE3_ASSOC)): 
+            $found = true;
+          ?>
+            <li><b><?php echo htmlspecialchars($row['username']); ?></b> - <?php echo htmlspecialchars($row['bio']); ?></li>
+          <?php endwhile; ?>
+          
+          <?php if (!$found): ?>
+            <li class="no-results">No authors found matching your search.</li>
+          <?php endif; ?>
+        </ul>
+      </div>
     <?php endif; ?>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 TechBlog - Web Security. Yasith Liyanage.</p>
   </div>
 </body>
 </html>
