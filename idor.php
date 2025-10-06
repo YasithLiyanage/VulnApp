@@ -7,52 +7,149 @@ if (!$row) {
     exit;
 }
 ?>
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <title>VulnApp — User Profile</title>
+  <meta charset="utf-8">
+  <title>TechBlog - User Profile</title>
   <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body {
-      background: linear-gradient(180deg, #071224 0%, #071226 45%, #06111a 100%);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    * {
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+    
+    .header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem 0;
+      border-bottom: 3px solid #3498db;
+    }
+    
+    .header .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
     }
-    .profile-container {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,0.03);
+    
+    .header h1 {
+      font-size: 1.8rem;
+    }
+    
+    .header nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+    
+    .header nav a:hover {
+      color: #3498db;
+    }
+    
+    .content {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 20px;
+    }
+    
+    .profile-box {
+      background: white;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    
+    .profile-box h2 {
+      color: #2c3e50;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #3498db;
+    }
+    
+    .profile-info {
+      margin: 20px 0;
+    }
+    
+    .profile-info label {
+      display: block;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    .profile-info p {
+      color: #333;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 3px;
+      border-left: 3px solid #3498db;
+    }
+    
+    .footer {
+      background: #2c3e50;
+      color: white;
       text-align: center;
-      width: 400px;
+      padding: 1.5rem;
+      margin-top: 3rem;
     }
-    .profile-container h2 {
-      margin-bottom: 20px;
-      color: var(--accent);
-    }
-    .profile-container p {
-      margin: 10px 0;
-      color: var(--text);
-      text-align: left;
+    
+    @media (max-width: 768px) {
+      .header .container {
+        flex-direction: column;
+      }
+      .header nav {
+        margin-top: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="profile-container">
-    <h2>Profile: <?php echo htmlspecialchars($row['username']); ?></h2>
-    <p>Email: <?php echo htmlspecialchars($row['email']); ?></p>
-    <p>Secret note: <?php echo htmlspecialchars($row['secret_note']); ?></p>
+  <div class="header">
+    <div class="container">
+      <h1>TechBlog</h1>
+      <nav>
+        <a href="index.php">Home</a>
+        <a href="sqli.php">Authors</a>
+        <a href="xss.php">Comments</a>
+        <a href="idor.php?user=1">Profile</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="profile-box">
+      <h2>User Profile</h2>
+      
+      <div class="profile-info">
+        <label>Username</label>
+        <p><?php echo htmlspecialchars($row['username']); ?></p>
+      </div>
+      
+      <div class="profile-info">
+        <label>Email Address</label>
+        <p><?php echo htmlspecialchars($row['email']); ?></p>
+      </div>
+      
+      <div class="profile-info">
+        <label>Personal Note</label>
+        <p><?php echo htmlspecialchars($row['secret_note']); ?></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 TechBlog - Web Security. Yasith Liyanage.</p>
   </div>
 </body>
 </html>

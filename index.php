@@ -278,7 +278,7 @@
   </div>
 
   <div class="footer">
-    <p>&copy; 2024 TechBlog. All rights reserved.</p>
+    <p>&copy; TechBlog. WS - Yasith Liyanage.</p>
   </div>
 </body>
 </html>
